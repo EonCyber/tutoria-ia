@@ -1,1 +1,21 @@
+# Node.js
+node_modules/
+dist/
 .env
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+target/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.env
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
