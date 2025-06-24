@@ -1,0 +1,1 @@
+Based on the SQL response provided, the number of legislators is **0**. \n\n### Summary:\n- **Legislators Count**: 0\n- This indicates that there are currently no entries in the `legislator` table
