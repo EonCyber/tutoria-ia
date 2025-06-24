@@ -5,10 +5,6 @@
 - Criar codigo langchain que acessa o gmail
 - Criar prompt que difere se o email é sobre oportunidade de trabalho ou nao
 
-
-# GMAIL
-tutoriaiagenerativa@gmail.com
-P5Li9&RT$psrsX
 # OAuth
 
 # Criar Credenciais Google Gmail
@@ -33,45 +29,3 @@ In the same credentials page, choose Create Credentials → OAuth client ID.
 
 💸 3. Cost & Usage
 **Free to use**: The Gmail API itself is free—including reading and sending emails.
-
-# Poll Example 
-```python
-# Poll inbox
-seen = set()
-while True:
-    # 1. Search unread emails
-    res = gmail_search.run("label:inbox is:unread")
-    messages = eval(res) if isinstance(res, str) else res
-
-    for m in messages:
-        msg_id = m["id"]
-        if msg_id in seen:
-            continue
-        seen.add(msg_id)
-
-        # 2. Fetch full message (including thread and sender)
-        msg = gmail_getmsg.run({"id": msg_id})
-        payload = msg.get("payload", {})
-        raw = payload.get("body", {}).get("data", "")
-        thread_id = msg.get("threadId")
-        headers = {h["name"]: h["value"] for h in payload.get("headers", [])}
-        sender = headers.get("From", "").split("<")[-1].rstrip(">")
-
-        # Clean HTML to text
-        body_text = BeautifulSoup(raw, "html.parser").get_text()
-
-        # 3. Generate summary
-        summary = llm_chain.run(email_body=body_text)
-
-        # 4. Reply in-thread with summary
-        gmail_send.run({
-            "to": sender,
-            "subject": "Re: " + headers.get("Subject", ""),
-            "message": summary,
-            "threadId": thread_id
-        })
-
-        print(f"Replied to {sender} in thread {thread_id}")
-
-    time.sleep(30)  # Poll every 30 seconds
-```
