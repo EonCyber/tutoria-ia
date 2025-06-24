@@ -1,1 +1,11 @@
-Based on the SQL response provided, the number of legislators is **0**. \n\n### Summary:\n- **Legislators Count**: 0\n- This indicates that there are currently no entries in the `legislator` table
+## Crie .env com estas variáveis
+```
+DB_PATH=src/db/sample.db
+DATA_PATH=src/data
+OPENAI_API_KEY= 
+LANGSMITH_TRACING= FALSE
+KMP_DUPLICATE_LIB_OK = TRUE
+```
+
+## Desafio
+- Otimize as chains com RAG para evitar um saturamento da janela de contexto, caso o numero de tabelas seja muito maior.
