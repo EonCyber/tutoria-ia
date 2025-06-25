@@ -32,7 +32,8 @@ class CVRetrieval:
         embeddings = self.load_embeddings()
         if Path(FAISS_STORE_PATH).exists():
             """
-
+            If the FAISS vector store already exists, load it from the local path.
+            This allows for faster retrieval without needing to recreate the vector store.
             """
             logtext("Vector Database(FAISS) local encontrado!")
             logtext("Carregando Retriever a partir do vDB local...")
@@ -40,6 +41,11 @@ class CVRetrieval:
             self.retriever = faiss_index.as_retriever()
             logtext("Retriever Carregado.")
         else:
+            """
+            If the FAISS vector store does not exist, create it from the documents.
+            This involves loading the documents, splitting them into chunks, and creating a new FAISS vector store.
+            The new vector store is then saved to the local path for future use.
+            """
             logtext("Criando e salvando VectorStore...")
             docs = self.create_loader(self.document_path).load()
             splitter = RecursiveCharacterTextSplitter(
