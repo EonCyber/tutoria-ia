@@ -8,7 +8,11 @@ from prompts.variables import EMAIL_ANALYSIS_PROMPT
 GPT_MODEL = 'gpt-4o-mini'
 
 class RagContextChain:
-    
+    """
+    RAG Context Chain for Email Analysis using LLM
+    - This is a class that uses LangChain to create a context-aware RAG (Retrieval-Augmented Generation) chain for email analysis.
+    - It retrieves relevant documents based on the input content and generates a response using a language model.
+    """
     def __init__(self, retriever):
         self.retriever = retriever
         self.prompt = ChatPromptTemplate.from_template(EMAIL_ANALYSIS_PROMPT)

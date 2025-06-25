@@ -1,16 +1,18 @@
-# TODO
-- Criar GMAIL pra.vagas.1@gmail.com
-- Criar API KEY do Gmail
-- Criar Rag com meu Currículo
-- Criar codigo langchain que acessa o gmail
-- Criar prompt que difere se o email é sobre oportunidade de trabalho ou nao
+## Create .env with these variables
+```
+OPENAI_API_KEY= 
+LANGSMITH_TRACING= FALSE
+KMP_DUPLICATE_LIB_OK = TRUE
+```
+## Create credentials.json
+- download the oauth id google credentials file and rename it to credentials.json in the root of the project.
 
-# OAuth
+# OAuth 
 
-# Criar Credenciais Google Gmail
+## Create Google Gmail Api Credentials and Authorization
  
 Link:
-https://console.cloud.google.com/welcome/new?pli=1&inv=1&invt=Ab0jHg
+https://console.cloud.google.com/
 
 🛠️ 1. Create a Google Cloud Project & Enable Gmail API
 - Sign in to the [Google Cloud Console].
@@ -29,3 +31,6 @@ In the same credentials page, choose Create Credentials → OAuth client ID.
 
 💸 3. Cost & Usage
 **Free to use**: The Gmail API itself is free—including reading and sending emails.
+
+## Authorize an User In The Google Cloud Platform Credentials
+- Authorize your email to access the application login.

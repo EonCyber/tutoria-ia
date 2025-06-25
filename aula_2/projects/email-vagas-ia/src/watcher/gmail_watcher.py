@@ -6,7 +6,13 @@ from util.stdout import logaianswer,loginputtext,logtext
 DOC_PATH = 'assets/cv.docx'
 
 class GmailAiWatcher:
-    
+    """
+    GmailAiWatcher Class
+    - This is a class that watches for new emails in a Gmail account, processes them, and replies with an AI-generated response.
+    - It uses the Gmail API to search for unread emails, retrieves their content, and generates a response using a RAG (Retrieval-Augmented Generation) model.
+    - The class is designed to run continuously, checking for new emails and responding to them as they arrive.
+    - It also marks emails as read after processing them to avoid duplicate responses.
+    """
     def __init__(self):
         self.tools = GmailTools()
     

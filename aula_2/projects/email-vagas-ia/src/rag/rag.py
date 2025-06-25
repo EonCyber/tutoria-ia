@@ -4,10 +4,19 @@ from pathlib import Path
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from util.stdout import logtext
+
 EMBEDDING_MODEL_TYPE = 'text-embedding-3-large'
 FAISS_STORE_PATH = 'src/db/cv_faiss_store'
 
 class CVRetrieval:
+    """
+        CVRetrieval Class
+        - This class is responsible for loading and managing the retrieval of CV documents.
+        - It uses the DoclingLoader to load documents, OpenAIEmbeddings for embeddings, and FAISS for vector storage.
+        - The class can create a retriever from existing FAISS vector store or create a new one if it does not exist.
+        - It provides methods to load embeddings, create a retriever, and fetch the retriever.
+        - The retriever can be used to retrieve relevant documents based on the input content.      
+    """
     def __init__(self, path):
         self.document_path = path
         self.retriever = None

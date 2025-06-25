@@ -11,7 +11,14 @@ CREDENTIALS_JSON_PATH = 'credentials.json'
 MODIFY_SCOPE = 'https://www.googleapis.com/auth/gmail.modify'
 
 class GoogleCredentialProvider:
-    
+    """
+    GoogleCredentialProvider Class
+    - This class is responsible for managing Google OAuth credentials for accessing Gmail API.  
+    - It fetches credentials from a local token file or generates new ones if the token is invalid or not found.
+    - The class uses the `google-auth` and `google-auth-oauthlib` libraries to handle OAuth 2.0 authentication.
+    - It provides a method to fetch valid credentials that can be used to interact with the Gmail API.
+    - The credentials are stored in a JSON file and can be refreshed if they expire.
+    """
     def __init__(self):
         self.scopes = [MODIFY_SCOPE]
         self.creds = None
