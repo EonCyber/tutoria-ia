@@ -1,3 +1,7 @@
+credentials.json
+token.json
+**/cv_faiss_store
+cv_faiss_store/**
 # Node.js
 node_modules/
 dist/
