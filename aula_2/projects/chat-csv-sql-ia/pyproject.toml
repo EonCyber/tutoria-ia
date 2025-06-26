@@ -6,7 +6,7 @@ authors = [
     {name = "EonCyber",email = "vieira4ev@gmail.com"}
 ]
 readme = "README.md"
-requires-python = "~3.13"
+requires-python = "~3.13.3"
 dependencies = [
     "python-dotenv (>=1.1.0,<2.0.0)",
     "fastapi (>=0.115.13,<0.116.0)",
@@ -20,7 +20,14 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{include = "chat_csv_sql_ia", from = "src"}]
+packages = [
+    {include = "ai", from = "src"},
+    {include = "controller", from = "src"},
+    {include = "data", from = "src"},
+    {include = "db", from = "src"},
+    {include = "pipeline", from = "src"},
+    {include = "prompts", from = "src"},
+    ]
 
 
 [build-system]
