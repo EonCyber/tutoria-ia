@@ -1,0 +1,49 @@
+from pathlib import Path
+from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request
+from google_auth_oauthlib.flow import InstalledAppFlow
+import json
+
+
+OAUTH_TOKEN_PATH = 'token.json'
+CREDENTIALS_JSON_PATH = 'credentials.json'
+SCOPE = 'https://www.googleapis.com/auth/tasks'
+
+class GoogleCredentialProvider:
+    """
+    GoogleCredentialProvider Class
+    - This class is responsible for managing Google OAuth credentials for accessing Gmail API.  
+    - It fetches credentials from a local token file or generates new ones if the token is invalid or not found.
+    - The class uses the `google-auth` and `google-auth-oauthlib` libraries to handle OAuth 2.0 authentication.
+    - It provides a method to fetch valid credentials that can be used to interact with the Gmail API.
+    - The credentials are stored in a JSON file and can be refreshed if they expire.
+    """
+    def __init__(self):
+        self.scopes = [SCOPE]
+        self.creds = None
+
+    def fetch_credential(self):
+        print("Fetching Google Credentials from local assets...")
+        if Path(OAUTH_TOKEN_PATH).exists():
+            print("Token Found. Authorizing...")
+            with open(OAUTH_TOKEN_PATH, "r") as token:
+                token_data = json.load(token)
+                self.creds = Credentials.from_authorized_user_info(info=token_data, scopes=self.scopes)
+                print("Success: Authorization OK!")
+        if not self.creds or not self.creds.valid:
+            print("Warning: Credentials are Invalid or Token not Found.")
+            if self.creds and self.creds.expired and self.creds.refresh_token:
+                print("Warning: Token Expired. Genereting Refresh Token...")
+                self.creds.refresh(Request())
+            else:
+                print("Warning: Authenticating Token not found. Generating new Token.")
+                if Path(CREDENTIALS_JSON_PATH).exists():
+                    flow = InstalledAppFlow.from_client_secrets_file(CREDENTIALS_JSON_PATH, self.scopes)
+                    self.creds = flow.run_local_server(port=56632)
+                    with open(OAUTH_TOKEN_PATH, "w") as token:
+                        token.write(self.creds.to_json())
+                    print("Success: Authorization OK!")
+                else:
+                    raise RuntimeError("Error: Credentials Json not Found on Local assets!")
+        return self.creds 
+        

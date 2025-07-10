@@ -1,0 +1,8 @@
+{
+  "dependencies": ["./src"],
+  "graphs": {
+    "task_with_tools": "./src/agent/task_agent.py:TaskAgent"
+  },
+  "env": ".env",
+  "python_version": "3.13"
+}
