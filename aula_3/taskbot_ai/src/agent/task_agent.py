@@ -5,54 +5,45 @@ from agent.prompt import SYSTEM_PROMPT
 from langgraph.graph import MessagesState
 from langgraph.graph import START, StateGraph
 from langgraph.prebuilt import tools_condition, ToolNode
+from dotenv import load_dotenv
 
-class TaskAgent:
+load_dotenv()
+agent_memory = MemorySaver()
+system_msg = SystemMessage(content=SYSTEM_PROMPT)
 
-    def __init__(self, tools):
-        self.memory = MemorySaver()
-        self.system_msg = SystemMessage(    
-            content=SYSTEM_PROMPT,
-        )
-        self.tools = tools
-        print('Inicializando OpenAi LLM com Ferramentas...')
-        self.llm = ChatOpenAI(
-            model="gpt-4o-mini",
-            temperature=0.0,
-        ).bind_tools(tools)
-        print('Construindo grafos...')
-        self.graph = self.build_graph()
-        print('Agente de Tarefas Construído com Sucesso!')
+def make_llm_with_tools(tools):
+    print('Inicializando OpenAi LLM com Ferramentas...')
+    return ChatOpenAI(
+        model="gpt-4o-mini",
+        temperature=0.2,
+    ).bind_tools(tools)
+
+def make_assistent_node(llm: ChatOpenAI):
+    def assistent(state: MessagesState):
+        messages = state['messages']
+        response = llm.invoke(messages)
+        return {"messages": messages + [response]}
+    return assistent
+
+def build_graph(tools):
+    llm = make_llm_with_tools(tools)
+    assistant_node = make_assistent_node(llm)
+
+    builder = StateGraph(MessagesState)
+    builder.add_node('assistant', assistant_node)
+    builder.add_node('tools', ToolNode(tools))
+    builder.add_edge(START, 'assistant')
+    builder.add_conditional_edges('assistant', tools_condition)
+    builder.add_edge('tools', 'assistant')
+
     
-    def build_graph(self):
-        builder = StateGraph(MessagesState)
+    return builder.compile()
 
-        # Definindo um Nodo Assistente
-        def assistant(state: MessagesState):
-            messages = state['messages']
-            response = self.llm.invoke(messages)
-            return {"messages": messages + [response]}
-        
-        builder.add_node('assistant', assistant)
-        builder.add_node('tools', ToolNode(self.tools))
-        builder.add_edge(START, 'assistant')
-        builder.add_conditional_edges('assistant', tools_condition)
-        builder.add_edge('tools', 'assistant')
+def create_task_agent(tools):
+    return build_graph(tools)
 
-        builder.compile().to_json_file("langgraph.json")
-        return builder.compile(checkpointer=MemorySaver())
-
-    def invoke(self, user_input: str):
-        """
-        Invokes the task agent with the user input.
-        """
-        # Create a new state with the user input
-        messages = { 'messages': [
-            self.system_msg,
-            HumanMessage(content=user_input)
-        ]}
-        config = {"configurable": {"thread_id": "1"}}
-        # Run the graph
-        result = self.graph.invoke(messages, config)
-        
-        # Return the response from the assistant
-        return result['messages'][-1].content if result['messages'] else None
+def invoke(graph, user_input: str):
+    messages = {'messages': [system_msg, HumanMessage(content=user_input)]}
+    config = {"configurable": {"thread_id": "1"}}
+    result = graph.invoke(messages)
+    return result['messages'][-1].content if result['messages'] else None
