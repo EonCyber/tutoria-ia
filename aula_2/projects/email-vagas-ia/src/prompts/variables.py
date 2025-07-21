@@ -12,7 +12,7 @@ Você receberá o conteúdo do e-mail. Esse conteúdo pode ser qualquer tipo de 
 Você também terá acesso a informações do currículo (CV) do usuário, providas por um sistema de recuperação de contexto (context), 
 que descrevem suas habilidades, experiências e preferências de carreira, esse deve ser a fonte única de consulta para julgar se a oferta está de acordo com o perfil do usuário.
 
-contexto: {context} 
+Context: {context} 
 
 ### 🧾 Decision Instructions
 1. Analise o conteúdo do e-mail.
