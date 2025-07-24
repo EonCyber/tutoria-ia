@@ -15,7 +15,7 @@ system_msg = SystemMessage(content=SYSTEM_PROMPT)
 
 def make_agent_node(tools):
     return create_react_agent(
-        model=ChatOpenAI(model="gpt-4o", temperature=0.2).bind_tools(tools),
+        model=ChatOpenAI(model="gpt-4o-mini", temperature=0.8).bind_tools(tools),
         tools=tools,
         prompt=SYSTEM_PROMPT
     )
@@ -27,7 +27,6 @@ def build_graph(tools):
     builder.add_node('tools', ToolNode(tools))
     builder.add_edge(START, "agent")
     builder.add_conditional_edges('agent', tools_condition)
-    builder.add_edge("agent", END)
 
     return builder.compile()
 
