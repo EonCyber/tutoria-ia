@@ -1,0 +1,10 @@
+[
+  {"role": "human", "content": "Olá! Quero me cadastrar."},
+  {"role": "ai", "content": "Olá! Claro, vamos começar. Qual é o seu nome completo?"},
+  {"role": "human", "content": "Meu nome é Carlos Silva."},
+  {"role": "ai", "content": "Perfeito, Carlos. Qual é o seu CPF?"},
+  {"role": "human", "content": "123.456.789-00"},
+  {"role": "ai", "content": "Ótimo! Agora, qual é o seu endereço de email?"},
+  {"role": "human", "content": "c.silva@example.com"},
+  {"role": "ai", "content": "Cadastro concluído! Nome: Carlos Silva, CPF: 123.456.789-00, Email: c.silva@example.com. Você deseja atualizar alguma informação?"}
+]

@@ -6,6 +6,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 import json
 from util.stdout import logtext
 
+
 OAUTH_TOKEN_PATH = 'token.json'
 CREDENTIALS_JSON_PATH = 'credentials.json'
 MODIFY_SCOPE = 'https://www.googleapis.com/auth/gmail.modify'

@@ -53,7 +53,10 @@ class CVRetrieval:
                             chunk_overlap=0
                         )
             chunks = splitter.split_documents(docs)
-            faiss_index = FAISS.from_documents(documents=chunks, embedding=embeddings)
+            faiss_index = FAISS.from_documents(
+                documents=chunks,
+                embedding=embeddings
+                )
             faiss_index.save_local(FAISS_STORE_PATH)
             self.retriever = faiss_index.as_retriever()
             logtext("Retriever Criado e Carregado.")
