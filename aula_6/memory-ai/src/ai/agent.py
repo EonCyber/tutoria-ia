@@ -7,19 +7,6 @@ import uuid
 
 load_dotenv()
 
-def memory_node(state: MessagesState, config: RunnableConfig, *, store):
-    user_id = config["configurable"].get("user_id", "anon")
-    namespace = (user_id, "memories")
-    # Recupera memórias semelhantes
-    memories = store.search(namespace, query=state["messages"][-1].content, limit=2)
-    memory_text = "\n".join([m.value["content"] for m in memories])
-    state["memory_context"] = memory_text  # adiciona contexto de memória ao estado
-    # Armazena a nova informação
-    mem_id = str(uuid.uuid4())
-    store.put(namespace, mem_id, {"content": state["messages"][-1].content})
-    return state
-
-
 def make_llm():
     return ChatOpenAI(model="gpt-4o-mini", temperature=0.7)
 

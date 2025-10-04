@@ -1,0 +1,28 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	assistant(assistant)
+	contract_editor(contract_editor)
+	human_approval_node(human_approval_node<hr/><small><em>__interrupt = before</em></small>)
+	generate_contract_node(generate_contract_node)
+	tools(tools)
+	save_contract_node(save_contract_node)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> assistant;
+	assistant -. &nbsp;end&nbsp; .-> __end__;
+	assistant -. &nbsp;has_contract_info&nbsp; .-> generate_contract_node;
+	assistant -. &nbsp;need_tool&nbsp; .-> tools;
+	contract_editor -. &nbsp;edit_ready&nbsp; .-> generate_contract_node;
+	contract_editor -. &nbsp;need_info&nbsp; .-> human_approval_node;
+	contract_editor -. &nbsp;approved&nbsp; .-> save_contract_node;
+	generate_contract_node --> human_approval_node;
+	human_approval_node --> contract_editor;
+	tools --> assistant;
+	save_contract_node --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
