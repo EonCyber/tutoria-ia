@@ -5,8 +5,8 @@ from rich.live import Live
 import threading
 import time
 import itertools
-import json
 import asyncio
+
 class AiChatApp:
     def __init__(self, agent):
         self.agent = agent
@@ -44,20 +44,6 @@ class AiChatApp:
                     time.sleep(0.1)
                 # Quando terminar, limpa o spinner
                 live.update("")
-            # Mostra a resposta quando terminar
-            # console.print(resposta)
-            # input()
-
-            # invocation_data = {
-            #     "model": self.llm.get_llm_data()["model"],
-            #     "temperature": self.llm.get_llm_data()["temperature"],
-            #     "vendor": self.llm.get_llm_data()["vendor"],
-            #     "input_tokens": resposta.usage_metadata.get("input_tokens",0),
-            #     "output_tokens": resposta.usage_metadata.get("output_tokens",0),
-            #     "total_tokens": resposta.usage_metadata.get("total_tokens", 0),
-            # }
+    
             console.print(Panel(Text(resposta, style="bold cyan"), title="IA"))
-            # Habilitar Metadados da chamada
-            # console.print(
-            #             Panel(Text(json.dumps(invocation_data, indent=2), style="gray"), title="Metadados"
-            #             ))
+     
