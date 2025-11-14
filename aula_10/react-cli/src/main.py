@@ -7,7 +7,7 @@ load_dotenv()
 if __name__ == "__main__": 
     agent = create_agent(
         model="gpt-4o-mini",
-        system_prompt="Você é um assistente que verifica a saúde do sistema e da dicas de melhora.",
+        system_prompt="Você é um assistente que monitora a saúde do pc do usuário.",
         tools=[get_system_info]
     )
 

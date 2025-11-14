@@ -15,8 +15,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 langfuse = get_client()
-session_id_seed = str(uuid.uuid4())
-session_id = langfuse.create_trace_id(seed=session_id_seed)
+session_seed = str(uuid.uuid4())
+session_id = langfuse.create_trace_id(seed=session_seed)
 langfuse_handler = CallbackHandler()
 
 class ChatBotApp:
@@ -43,6 +43,7 @@ class ChatBotApp:
             def generate_response():
                 nonlocal response
                 try:
+                    # response = self.agent.invoke({ "messages": user_input }, config={ "callbacks": [langfuse_handler] })
                     response = self.agent.invoke({ 
                         "messages": user_input }, 
                         config={ "callbacks": [langfuse_handler], 
